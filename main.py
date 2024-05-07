@@ -41,7 +41,7 @@ async def predict(request: Request,
     features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
 
-    disease_status = "Heart Disease" if prediction == 1 else "Not Heart Disease"
+    disease_status = "You have cardiac risk factors. Please check up ECG, Eco 2D and ETT" if prediction == 1 else "Not signs found for Heart Disease"
 
     return templates.TemplateResponse("results.html", {"request": request, "prediction": disease_status}, 
                                       headers={"Content-Type": "text/html; charset=utf-8"})

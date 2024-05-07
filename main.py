@@ -1,4 +1,4 @@
-import pickle as pkl
+import pickle
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates

@@ -11,7 +11,7 @@ with open("svm_clf.pkl", "rb") as file:  # Changed the model name
 
 # Assuming main.py is in the same directory as the templates and static directories
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")
-#static_dir = os.path.join(os.path.dirname(__file__), "static")
+static_dir = os.path.join(os.path.dirname(__file__), "static")
 templates = Jinja2Templates(directory=templates_dir)
 
 @app.get("/", response_class=HTMLResponse)
@@ -38,16 +38,16 @@ async def predict(request: Request,
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
 
-    features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
+    features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
 
     disease_status = "Heart Disease" if prediction == 1 else "Not Heart Disease"
 
-    return templates.TemplateResponse("result.html", {"request": request, "prediction": disease_status}, 
+    return templates.TemplateResponse("results.html", {"request": request, "prediction": disease_status}, 
                                       headers={"Content-Type": "text/html; charset=utf-8"})
 
 # Mounting the static files directory
-#@app.get("/static/{filename}")
-#async def get_static_file(filename: str):
-    #return FileResponse(os.path.join(static_dir, filename), media_type="text/css")  # Added media_type
+@app.get("/static/{filename}")
+async def get_static_file(filename: str):
+    return FileResponse(os.path.join(static_dir, filename), media_type="text/css")  # Added media_type
 

@@ -7,7 +7,6 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-
 with open("dt_clf.pkl", "rb") as file:  # Changed the model name
     model = pickle.load(file)
 
@@ -16,12 +15,12 @@ templates_dir = os.path.join(os.path.dirname(__file__), "templates")
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 templates = Jinja2Templates(directory=templates_dir)
 
+pdb.set_trace()  # Set breakpoint here
+
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-
-	pdb.set_trace()  # Set breakpoint here
 @app.post("/predict/")
 async def predict(request: Request,
                   BMI: float = Form(...),
@@ -41,16 +40,16 @@ async def predict(request: Request,
                   Asthma: int = Form(...),
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
-	pdb.set_trace()  # Set breakpoint here
+    
+    pdb.set_trace()  # Set breakpoint here
 
-    features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
+    features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
 
     disease_status = "You have cardiac risk factors. Please check up ECG, Eco 2D and ETT" if prediction == 1 else "Not signs found for Heart Disease"
 
     return templates.TemplateResponse("results.html", {"request": request, "prediction": disease_status}, 
                                       headers={"Content-Type": "text/html; charset=utf-8"})
-
 
 # Mounting the static files directory
 @app.get("/static/{filename}")

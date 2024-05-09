@@ -1,12 +1,13 @@
 import pickle
+import os
+import pdb
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
-import os
 
 app = FastAPI()
 
-with open("svm_clf.pkl", "rb") as file:  # Changed the model name
+with open("dt_clf.pkl", "rb") as file:  # Changed the model name
     model = pickle.load(file)
 
 # Assuming main.py is in the same directory as the templates and static directories
@@ -38,6 +39,8 @@ async def predict(request: Request,
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
 
+    pdb.set_trace()  # Set breakpoint here
+
     features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
 
@@ -50,4 +53,3 @@ async def predict(request: Request,
 @app.get("/static/{filename}")
 async def get_static_file(filename: str):
     return FileResponse(os.path.join(static_dir, filename), media_type="text/css")  # Added media_type
-

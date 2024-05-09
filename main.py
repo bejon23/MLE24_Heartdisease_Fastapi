@@ -21,7 +21,7 @@ async def read_item(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-pdb.set_trace()  # Set breakpoint here
+	pdb.set_trace()  # Set breakpoint here
 @app.post("/predict/")
 async def predict(request: Request,
                   BMI: float = Form(...),
@@ -41,7 +41,7 @@ async def predict(request: Request,
                   Asthma: int = Form(...),
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
-pdb.set_trace()  # Set breakpoint here
+	pdb.set_trace()  # Set breakpoint here
 
     features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]

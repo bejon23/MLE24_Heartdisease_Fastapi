@@ -7,6 +7,8 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
+pdb.set_trace()  # Set breakpoint here
+
 with open("dt_clf.pkl", "rb") as file:  # Changed the model name
     model = pickle.load(file)
 
@@ -39,7 +41,6 @@ async def predict(request: Request,
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
 
-    pdb.set_trace()  # Set breakpoint here
 
     features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,    Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
@@ -48,6 +49,8 @@ async def predict(request: Request,
 
     return templates.TemplateResponse("results.html", {"request": request, "prediction": disease_status}, 
                                       headers={"Content-Type": "text/html; charset=utf-8"})
+
+pdb.set_trace()  # Set breakpoint here
 
 # Mounting the static files directory
 @app.get("/static/{filename}")

@@ -15,7 +15,7 @@ templates_dir = os.path.join(os.path.dirname(__file__), "templates")
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 templates = Jinja2Templates(directory=templates_dir)
 
-pdb.set_trace()  # Set breakpoint here
+#pdb.set_trace()  # Set breakpoint here
 
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
@@ -41,7 +41,7 @@ async def predict(request: Request,
                   KidneyDisease: int = Form(...),
                   SkinCancer: int = Form(...)):
     
-    pdb.set_trace()  # Set breakpoint here
+    #pdb.set_trace()  # Set breakpoint here
 
     features = [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer]
     prediction = model.predict([features])[0]
